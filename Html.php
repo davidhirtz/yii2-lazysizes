@@ -2,10 +2,12 @@
 /**
  * @author David Hirtz <hello@davidhirtz.com>
  * @copyright Copyright (c) 2016 David Hirtz
- * @version 1.0
+ * @version 1.1
  */
 
 namespace davidhirtz\yii2\lazysizes;
+use yii\helpers\ArrayHelper;
+use yii\helpers\Url;
 use Yii;
 
 /**
