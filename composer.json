@@ -1,0 +1,22 @@
+{
+    "name": "davidhirtz/yii2-lazysizes",
+    "description": "High performance and SEO friendly lazy loader for images (responsive and normal), iframes and more, that detects any visibility changes triggered through user interaction, CSS or JavaScript without configuration.",
+    "type": "yii2-extension",
+    "keywords": ["yii2"," extension"," lazysizes"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "David Hirtz",
+            "email": "hello@davidhirtz.com"
+        }
+    ],
+    "require": {
+        "yiisoft/yii2": "*",
+		"bower-asset/lazysizes": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "davidhirtz\\yii2\\lazysizes\\": ""
+        }
+    }
+}
