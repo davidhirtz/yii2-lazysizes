@@ -45,7 +45,7 @@ class Html extends \yii\helpers\Html
 			foreach($src as $width=>$url)
 			{
 				$url=Url::to($url);
-				$srcset="$url {$width}w";
+				$srcset[]=“$url {$width}w";
 			}
 
 			$options['data-srcset']=implode(', ', $srcset);
