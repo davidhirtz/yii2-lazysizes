@@ -52,6 +52,7 @@ class Html extends \yii\helpers\Html
 			$options['data-sizes']=ArrayHelper::getValue($options, 'data-sizes', 'auto');
 		}
 
+		static::addCssClass($options, 'lazyload');
 		return static::beginTag('img', $options);
 	}
 }
