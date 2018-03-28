@@ -47,6 +47,11 @@ class Html extends \yii\helpers\Html
 				$url=Url::to($url);
 				$srcset[]="$url {$width}w";
 			}
+			
+			if(!isset($options['data-src']))
+			{
+				$options['data-src']=$url;
+			}
 
 			$options['data-srcset']=implode(', ', $srcset);
 			$options['data-sizes']=ArrayHelper::getValue($options, 'data-sizes', 'auto');
