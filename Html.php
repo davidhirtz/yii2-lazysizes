@@ -2,7 +2,7 @@
 /**
  * @author David Hirtz <hello@davidhirtz.com>
  * @copyright Copyright (c) 2016 David Hirtz
- * @version 1.1
+ * @version 1.2
  */
 
 namespace davidhirtz\yii2\lazysizes;
@@ -22,42 +22,41 @@ class Html extends \yii\helpers\Html
 	private static $isRegistered=false;
 
 	/**
-	 * @param array|string can be a string
-	 * @inheritdoc
+	 * @param array|string $srcset
+	 * @param array $options
+	 * @param bool|string $scheme
+	 * @return string
 	 */
-	public static function lazyImg($src, $options=[])
+	public static function lazyImg($srcset, $options=[], $scheme=false)
 	{
-		if(!self::$isRegistered)
+		if(!static::$isRegistered)
 		{
 			AssetBundle::register(Yii::$app->getView());
-			self::$isRegistered=true;
+			static::$isRegistered=true;
 		}
 
-		if(is_string($src))
+		if(is_string($srcset))
 		{
-			$options['data-src']=Url::to($src);
+			$options['data-src']=Url::to($srcset, $scheme);
 		}
-
-		elseif(is_array($src))
+		else
 		{
-			$srcset=[];
+			$sizes=[];
 
-			foreach($src as $width=>$url)
+			foreach($srcset as $width=>$url)
 			{
-				$url=Url::to($url);
-				$srcset[]="$url {$width}w";
-			}
-			
-			if(!isset($options['data-src']))
-			{
-				$options['data-src']=$url;
+				$sizes[]=Url::to($url, $scheme)." {$width}w";
 			}
 
-			$options['data-srcset']=implode(', ', $srcset);
-			$options['data-sizes']=ArrayHelper::getValue($options, 'data-sizes', 'auto');
+			if(count($sizes)>1)
+			{
+				$options['data-srcset']=implode(',', $sizes);
+				$options['data-sizes']=ArrayHelper::getValue($options, 'data-sizes', 'auto');
+			}
+
+			$options['data-src']=array_shift($srcset);
 		}
 
-		static::addCssClass($options, 'lazyload');
 		return static::beginTag('img', $options);
 	}
 }
