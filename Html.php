@@ -57,6 +57,11 @@ class Html extends \yii\helpers\Html
 			$options['data-src']=array_shift($srcset);
 		}
 
+		if(!empty($options['class']))
+		{
+			$options['class']='lazyload';
+		}
+
 		return static::beginTag('img', $options);
 	}
 }
