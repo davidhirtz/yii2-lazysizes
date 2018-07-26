@@ -30,16 +30,27 @@ class AssetBundle extends \yii\web\AssetBundle
 	];
 
 	/**
-	 * @inherit
+	 * @var array
 	 */
 	public $js=[
-		'lazysizes.min.js',
+		[
+			'lazysizes.min.js',
+			'position'=>View::POS_HEAD,
+			'async'=>true,
+		],
 	];
 
 	/**
-	 * @inherit
+	 * Overrides path with CDN url.
 	 */
-	public $jsOptions=[
-		'position'=>View::POS_BEGIN,
-	];
+	public function init()
+	{
+		if(!YII_DEBUG)
+		{
+			$this->sourcePath=null;
+			$this->js[0][0]='//cdnjs.cloudflare.com/ajax/libs/lazysizes/4.0.4/lazysizes.min.js';
+		}
+
+		parent::init();
+	}
 }
