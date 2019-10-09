@@ -1,8 +1,8 @@
 <?php
 /**
  * @author David Hirtz <hello@davidhirtz.com>
- * @copyright Copyright (c) 2016 David Hirtz
- * @version 1.0.1
+ * @copyright Copyright (c) 2019 David Hirtz
+ * @version 2.0
  */
 namespace davidhirtz\yii2\lazysizes;
 use yii\web\View;
@@ -47,7 +47,7 @@ class AssetBundle extends \yii\web\AssetBundle
 		if(!YII_DEBUG)
 		{
 			$this->sourcePath=null;
-			$this->js[0][0]='//cdnjs.cloudflare.com/ajax/libs/lazysizes/4.0.4/lazysizes.min.js';
+			$this->js[0][0]='https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js';
 		}
 
 		parent::init();

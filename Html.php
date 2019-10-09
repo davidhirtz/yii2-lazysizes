@@ -1,14 +1,14 @@
 <?php
 /**
  * @author David Hirtz <hello@davidhirtz.com>
- * @copyright Copyright (c) 2016 David Hirtz
- * @version 1.2
+ * @copyright Copyright (c) 2019 David Hirtz
+ * @version 2.0
  */
 
 namespace davidhirtz\yii2\lazysizes;
+
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
-use Yii;
 
 /**
  * Class Html.
@@ -16,52 +16,50 @@ use Yii;
  */
 class Html extends \yii\helpers\Html
 {
-	/**
-	 * @var bool
-	 */
-	private static $isRegistered=false;
+    /**
+     * @param array|string $srcset
+     * @param array $options
+     * @param bool|string $scheme
+     * @return string
+     */
+    public static function lazyImg($srcset, $options = [], $scheme = false): string
+    {
+        $options['data-src'] = static::getSrc($srcset, $scheme);
 
-	/**
-	 * @param array|string $srcset
-	 * @param array $options
-	 * @param bool|string $scheme
-	 * @return string
-	 */
-	public static function lazyImg($srcset, $options=[], $scheme=false)
-	{
-		if(!static::$isRegistered)
-		{
-			AssetBundle::register(Yii::$app->getView());
-			static::$isRegistered=true;
-		}
+        if (count($srcset) > 1) {
+            $options['data-srcset'] = static::getSrcset($srcset, $scheme);
+            $options['data-sizes'] = ArrayHelper::getValue($options, 'data-sizes', 'auto');
+        }
 
-		if(is_string($srcset))
-		{
-			$options['data-src']=Url::to($srcset, $scheme);
-		}
-		else
-		{
-			$sizes=[];
+        if (empty($options['class'])) {
+            $options['class'] = 'lazyload';
+        }
 
-			foreach($srcset as $width=>$url)
-			{
-				$sizes[]=Url::to($url, $scheme)." {$width}w";
-			}
+        return static::beginTag('img', $options);
+    }
 
-			if(count($sizes)>1)
-			{
-				$options['data-srcset']=implode(',', $sizes);
-				$options['data-sizes']=ArrayHelper::getValue($options, 'data-sizes', 'auto');
-			}
+    /**
+     * @param array $srcset
+     * @param bool|string $scheme
+     * @return string
+     */
+    public static function getSrc($srcset, $scheme = false): string
+    {
+        return Url::to(is_string($srcset) ? $srcset : array_shift($srcset), $scheme);
+    }
 
-			$options['data-src']=array_shift($srcset);
-		}
+    /**
+     * @param array $srcset
+     * @param bool|string $scheme
+     * @return string
+     */
+    public static function getSrcset($srcset, $scheme = false): string
+    {
+        $sizes = [];
+        foreach ($srcset as $width => $url) {
+            $sizes[] = Url::to($url, $scheme) . " {$width}w";
+        }
 
-		if(empty($options['class']))
-		{
-			$options['class']='lazyload';
-		}
-
-		return static::beginTag('img', $options);
-	}
+        return implode(',', $sizes);
+    }
 }
