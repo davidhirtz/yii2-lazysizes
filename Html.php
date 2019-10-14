@@ -57,8 +57,10 @@ class Html extends \yii\helpers\Html
     {
         $sizes = [];
         foreach ($srcset as $width => $url) {
-            $sizes[] = Url::to($url, $scheme) . " {$width}w";
+            $sizes[$width] = Url::to($url, $scheme) . " {$width}w";
         }
+
+        ksort($sizes);
 
         return implode(',', $sizes);
     }
