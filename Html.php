@@ -1,8 +1,8 @@
 <?php
 /**
  * @author David Hirtz <hello@davidhirtz.com>
- * @copyright Copyright (c) 2019 David Hirtz
- * @version 2.0
+ * @copyright Copyright (c) 2020 David Hirtz
+ * @version 2.1
  */
 
 namespace davidhirtz\yii2\lazysizes;
@@ -49,12 +49,16 @@ class Html extends \yii\helpers\Html
     }
 
     /**
-     * @param array $srcset
+     * @param array|string $srcset
      * @param bool|string $scheme
      * @return string
      */
     public static function getSrcset($srcset, $scheme = false): string
     {
+        if (is_string($srcset)) {
+            return Url::to($srcset, $scheme);
+        }
+
         $sizes = [];
         foreach ($srcset as $width => $url) {
             $sizes[$width] = Url::to($url, $scheme) . " {$width}w";
