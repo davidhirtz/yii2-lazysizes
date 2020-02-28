@@ -26,7 +26,7 @@ class Html extends \yii\helpers\Html
     {
         $options['data-src'] = static::getSrc($srcset, $scheme);
 
-        if (count($srcset) > 1) {
+        if (is_array($srcset) && count($srcset) > 1) {
             $options['data-srcset'] = static::getSrcset($srcset, $scheme);
             $options['data-sizes'] = ArrayHelper::getValue($options, 'data-sizes', 'auto');
         }
