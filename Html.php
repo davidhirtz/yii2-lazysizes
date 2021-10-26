@@ -2,7 +2,7 @@
 /**
  * @author David Hirtz <hello@davidhirtz.com>
  * @copyright Copyright (c) 2020 David Hirtz
- * @version 2.1
+ * @version 2.2
  */
 
 namespace davidhirtz\yii2\lazysizes;
