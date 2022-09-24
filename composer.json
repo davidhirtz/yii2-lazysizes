@@ -15,10 +15,8 @@
     }
   ],
   "require": {
-    "yiisoft/yii2": "*"
-  },
-  "require-dev": {
-    "bower-asset/lazysizes": ">5.3.1"
+    "yiisoft/yii2": "*",
+    "npm-asset/lazysizes": ">=5.3.2"
   },
   "autoload": {
     "psr-4": {
